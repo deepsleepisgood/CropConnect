@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'localestring.dart';
+import 'navigation.dart';
+
+
 class Information extends StatefulWidget {
   final String userId;
-
-  const Information({super.key, required  this.userId});
+  String page;
+  Information({super.key, required  this.userId, required this.page});
 
   @override
   State<Information> createState() => _InformationState();
@@ -18,7 +21,7 @@ class _InformationState extends State<Information> {
         return Container(
           height: 100,
           padding: EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(topRight: Radius.circular(10.0),topLeft: Radius.circular(10.0)),
           ),
           child: Row(
@@ -49,17 +52,21 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const NavBar(
+        userId: "userId",
+        currentPage: "info",
+      ),
       appBar: AppBar(
         title: Text('how'.tr),
         centerTitle: true,
-        backgroundColor: Color(0xFF62BA47),
+        backgroundColor: const Color(0xFF62BA47),
       ),
 
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Text('info'.tr,style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
             const SizedBox(height: 20,),
             Divider(color: Colors.black, height: 10),

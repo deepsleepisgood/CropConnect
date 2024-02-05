@@ -51,10 +51,10 @@ class _NavBarState extends State<NavBar> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(userId: widget.userId),
+                    builder: (context) => HomePage(userId: widget.userId, page: "home",),
                   ));
             },
-            tileColor: widget.currentPage == "Home" ? Colors.white54 : null,
+            tileColor: widget.currentPage == "home" ? Colors.grey : null,
           ),
           ListTile(
             leading: const Icon(
@@ -75,9 +75,10 @@ class _NavBarState extends State<NavBar> {
                   MaterialPageRoute(
                       builder: (context) => Information(
                         userId: widget.userId,
+                        page: "info",
                       )));
             },
-            tileColor: widget.currentPage == "Information" ? Colors.white54 : null,
+            tileColor: widget.currentPage == "info" ? Colors.grey : null,
           ),
           // ListTile(
           //   leading: const Icon(
