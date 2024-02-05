@@ -99,23 +99,43 @@ class _MyRegisterState extends State<MyRegister> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(0xFFF2EFEB),
+        // image: DecorationImage(
+        //     image: AssetImage('assets/3.png'), fit: BoxFit.cover),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        // appBar: AppBar(
+        //   backgroundColor: const Color.fromARGB(0, 59, 59, 59),
+        //   elevation: 0,
+        // ),
+        body: Column(
           children: [
+            SizedBox(height: 40,),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [Text(
+                  "Create an account",
+                  style: TextStyle(color: Color(0xFF88C431), fontSize: 28),
+                ),
+                  Image.asset(
+                    'assets/krishi.jpeg', // Replace with the actual path
+                    width: 150,
+                    height: 150,
+                  ),
+                ]
+            ),
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.25),
+                    top: MediaQuery.of(context).size.height * 0.001),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Create an account",
-                      style: TextStyle(color: Color(0xFF88C431), fontSize: 28, fontWeight: FontWeight.bold),
-                    ),
                     Container(
-                      margin: const EdgeInsets.only(left: 35, right: 35),
+                      margin: EdgeInsets.only(left: 35, right: 35),
                       child: Column(
                         children: [
                           TextFormField(
@@ -129,7 +149,7 @@ class _MyRegisterState extends State<MyRegister> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 30,
                           ),
                           TextFormField(
@@ -144,7 +164,7 @@ class _MyRegisterState extends State<MyRegister> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 30,
                           ),
                           TextFormField(
@@ -158,13 +178,13 @@ class _MyRegisterState extends State<MyRegister> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 30,
                           ),
                           TextFormField(
                             controller: _passwordController,
                             obscureText: true,
-                            style: const TextStyle(color: Color(0xFFD49A42)),
+                            style: TextStyle(color: Color(0xFFD49A42)),
                             decoration: InputDecoration(
                                 fillColor: Colors.grey.shade100,
                                 filled: true,
@@ -173,56 +193,60 @@ class _MyRegisterState extends State<MyRegister> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 40,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               TextButton(
-                                onPressed: register,
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                                child: const Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                    color: Color(0xFF88C431),
-                                    fontSize: 27,
-                                    fontWeight: FontWeight.w700),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, 'register');
+                                },
+                                child: Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                      color: Color(0xFF88C431),
+                                      fontSize: 27,
+                                      fontWeight: FontWeight.w700),
                                 ),
+                                style: TextButton.styleFrom(backgroundColor: Colors.white),
                               ),
 
                             ],
                           ),
-                          const SizedBox(
-                            height: 80,
+                          SizedBox(
+                            height: 30,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyLogin(),));
+                                  Navigator.push(context,MaterialPageRoute(builder: (context) => MyLogin(),) );
                                 },
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                                child: const Text(
+                                child: Text(
                                   'Sign In',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
                                       color: Color(0xFF88C431),
                                       fontSize: 18),
                                 ),
+                                style: TextButton.styleFrom(backgroundColor: Colors.white),
                               ),
                               TextButton(
-                                onPressed: () {},
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                                child: const Text(
+                                onPressed: () {
+                                  //Navigator.pushNamed(context, 'login');
+                                },
+
+                                child: Text(
                                   'Language',
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                       color: Color(0xFF88C431),
                                       fontSize: 18),
                                 ),
-
+                                style: TextButton.styleFrom(backgroundColor: Colors.white),
                               ),
                             ],
                           )
@@ -235,14 +259,7 @@ class _MyRegisterState extends State<MyRegister> {
             ),
           ],
         ),
-      bottomNavigationBar:
-      TextButton(
-        style:TextButton.styleFrom(foregroundColor: Colors.green),
-        onPressed: () {
-          _showPullUpDrawer(context);
-        },
-        child: Text('lang'.tr,style: TextStyle(fontSize: 16),),
       ),
-      );
+    );
   }
 }
