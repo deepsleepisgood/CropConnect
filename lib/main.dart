@@ -18,7 +18,7 @@ class CropConnect extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translations: LocalString(),
       locale: Locale('en','US'),
-      home: HomePage(userId: 'userId',),
+      home: Information(userId: 'userId',),
     );
   }
 }
