@@ -3,6 +3,7 @@ import 'package:cropconnect/pages/homepage.dart';
 import 'package:cropconnect/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 
@@ -23,23 +24,24 @@ class _MyRegisterState extends State<MyRegister> {
   String userId = "";
 
   Future<void> register() async {
-    const String uri = "http://172.16.22.254:5000/register";
-    Map<String, String> data = {
-      "Name" : _nameController.text,
-      "State" : "Haryana",
-      "Phone Number" : _phoneController.text,
-      "PAN" : _panController.text,
-      "Password" : _passwordController.text
-    };
+    const String uri = "http://51.120.6.142:80/register";
+    // Map<String, String> userHeader = {"Content-type": "application/json"};
     try{
       final response = await http.post(
         Uri.parse(uri),
-        body : (data),
+        headers: {'Content-Type': 'application/json'},
+        body : jsonEncode({
+          "Name" : _nameController.text,
+          "State" : "Haryana",
+          "Phone Number" : _phoneController.text,
+          "PAN" : _panController.text,
+          "Password" : _passwordController.text
+        }),
       );
       if (response.statusCode == 200){
         final Map<String, dynamic> responseBody = json.decode(response.body);
         var token = responseBody['token'];
-        userId = token['user_id'];
+        print(JwtDecoder.decode(token));
         prefs.setString('token', token);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage(userId: userId, page: "home"),));
         print("Successful registration");
