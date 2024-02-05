@@ -4,6 +4,7 @@ import 'package:cropconnect/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 class MyRegister extends StatefulWidget {
   const MyRegister({Key? key}) : super(key: key);
@@ -50,6 +51,41 @@ class _MyRegisterState extends State<MyRegister> {
     catch (error){
       print("Error : $error");
     }
+  }
+  //language
+  void _showPullUpDrawer(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 100,
+          padding: const EdgeInsets.all(10.0),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(10.0),topLeft: Radius.circular(10.0)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(onPressed: (){
+                var locale = Locale('en','US');
+                Get.updateLocale(locale);
+              },
+                style: TextButton.styleFrom(foregroundColor: Colors.green),
+                child: const Text('English',style: TextStyle(fontSize: 16),),
+              ),
+              TextButton(onPressed: (){
+                var locale = Locale('hi','IN');
+                Get.updateLocale(locale);
+              },
+                style: TextButton.styleFrom(foregroundColor: Colors.green),
+                child: const Text('हिंदी', style: TextStyle(fontSize: 16),),
+              ),
+            ],
+          ),
+
+        );
+      },
+    );
   }
   //INITIALIZING SHARED PREFS
   void initSharedPref() async {
@@ -199,6 +235,14 @@ class _MyRegisterState extends State<MyRegister> {
             ),
           ],
         ),
+      bottomNavigationBar:
+      TextButton(
+        style:TextButton.styleFrom(foregroundColor: Colors.green),
+        onPressed: () {
+          _showPullUpDrawer(context);
+        },
+        child: Text('lang'.tr,style: TextStyle(fontSize: 16),),
+      ),
       );
   }
 }

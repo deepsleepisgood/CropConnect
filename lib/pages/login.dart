@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
 
@@ -13,6 +13,41 @@ class _MyLoginState extends State<MyLogin> {
     final TextEditingController _nameController = TextEditingController();
     final TextEditingController _phoneController = TextEditingController();
     final TextEditingController _passwordController = TextEditingController();
+    //language
+    void _showPullUpDrawer(BuildContext context) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            height: 100,
+            padding: const EdgeInsets.all(10.0),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(topRight: Radius.circular(10.0),topLeft: Radius.circular(10.0)),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(onPressed: (){
+                  var locale = Locale('en','US');
+                  Get.updateLocale(locale);
+                },
+                  style: TextButton.styleFrom(foregroundColor: Colors.green),
+                  child: const Text('English',style: TextStyle(fontSize: 16),),
+                ),
+                TextButton(onPressed: (){
+                  var locale = Locale('hi','IN');
+                  Get.updateLocale(locale);
+                },
+                  style: TextButton.styleFrom(foregroundColor: Colors.green),
+                  child: const Text('हिंदी', style: TextStyle(fontSize: 16),),
+                ),
+              ],
+            ),
+
+          );
+        },
+      );
+    }
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xFFF2EFEB),
@@ -135,6 +170,14 @@ class _MyLoginState extends State<MyLogin> {
               ),
             ),
           ],
+        ),
+        bottomNavigationBar:
+        TextButton(
+          style:TextButton.styleFrom(foregroundColor: Colors.green),
+          onPressed: () {
+            _showPullUpDrawer(context);
+          },
+          child: Text('lang'.tr,style: TextStyle(fontSize: 16),),
         ),
       ),
     );

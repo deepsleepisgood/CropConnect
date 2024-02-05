@@ -160,30 +160,44 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   const SizedBox(
-                    height: 100,
+                    height: 150,
                   ),
-             Container(
-               padding: const EdgeInsets.all(15.0),
-               decoration: const BoxDecoration(
-                 shape: BoxShape.circle,
-                 color: Colors.green, // Customize the color as needed
-               ),
-               child: IconButton(onPressed: (){
-                 _pickImage(true);
-               },
-                   alignment: Alignment.center,
-                   icon: const Icon(Icons.add_a_photo,size: 30, color: Colors.white,)),
-             )
+           //container(
+           //padding: const EdgeInsets.all(15.0),
+           //decoration: const BoxDecoration(
+           //  shape: BoxShape.circle,
+           //  color: Colors.green, // Customize the color as needed
+           //),
+           //child: IconButton(onPressed: (){
+           //  _pickImage(true);
+           //},
+           //    alignment: Alignment.center,
+           //    icon: const Icon(Icons.add_a_photo,size: 30, color: Colors.white,)),
+           //
                 ],
               ),
             ),
-            const SizedBox(height: 420,),
+            const SizedBox(height: 380,),
             TextButton(
               style:TextButton.styleFrom(foregroundColor: Colors.green),
               onPressed: () {
                 _showPullUpDrawer(context);
               },
-              child: Text('lang'.tr, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
+              child: Text('lang'.tr, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.green),),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: Container(
+        padding: EdgeInsets.only(left: 30.0),
+        alignment: Alignment.center,
+        child: Column(
+          children: [
+            SizedBox(height: 630,),
+            FloatingActionButton(
+              onPressed: (){_pickImage(true);},
+              child: Icon(Icons.add_a_photo),
+              backgroundColor: Colors.green,
             ),
           ],
         ),

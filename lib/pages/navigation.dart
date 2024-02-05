@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cropconnect/pages/homepage.dart';
 import 'package:cropconnect/pages/info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'support.dart';
+
 class NavBar extends StatefulWidget {
   final String userId;
   final String currentPage;
@@ -11,10 +13,8 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-
   @override
   Widget build(BuildContext context) {
-
     return Drawer(
       backgroundColor: Colors.white,
       width: MediaQuery.of(context).size.width * 0.7,
@@ -32,8 +32,8 @@ class _NavBarState extends State<NavBar> {
               child: const Image(
                 image: AssetImage('assets/krishi.jpeg'),
               )
-            // const Text("SWASTH", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),),
-          ),
+              // const Text("SWASTH", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),),
+              ),
           ListTile(
             leading: const Icon(
               Icons.home,
@@ -51,7 +51,10 @@ class _NavBarState extends State<NavBar> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomePage(userId: widget.userId, page: "home",),
+                    builder: (context) => HomePage(
+                      userId: widget.userId,
+                      page: "home",
+                    ),
                   ));
             },
             tileColor: widget.currentPage == "home" ? Colors.grey : null,
@@ -74,15 +77,39 @@ class _NavBarState extends State<NavBar> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => Information(
-                        userId: widget.userId,
-                        page: "info",
-                      )));
+                            userId: widget.userId,
+                            page: "info",
+                          )));
             },
             tileColor: widget.currentPage == "info" ? Colors.grey : null,
           ),
+          ListTile(
+            leading: const Icon(
+              Icons.support_agent_sharp,
+              size: 20,
+              color: Colors.black,
+            ),
+            title: const Text(
+              "Support",
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SupportPage(
+                            userId: widget.userId,
+                            page: "support",
+                          )));
+            },
+            tileColor: widget.currentPage == "support" ? Colors.grey : null,
+          ),
           // ListTile(
-          //   leading: const Icon(
-          //     Icons.file_copy_outlined,
+          //  leading: const Icon(
+          //   Icons.file_copy_outlined,
           //     size: 20,
           //     color: Colors.black,
           //   ),
