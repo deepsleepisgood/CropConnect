@@ -33,10 +33,16 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _image = image;
       });
+      try {
+        _uploadImage(_image!);
+      }
+      catch (error) {
+        print("ERROR : ${error}");
+      }
     }
   }
   // FUNCTION TO UPLOAD IMAGE ON THE BACKEND
-  Future<void> _uploadImage(String imagePath) async {
+  Future<void> _uploadImage(XFile imagePath) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     Map<String, dynamic>? decodedToken = JwtDecoder.decode(token!);
@@ -53,7 +59,7 @@ class _HomePageState extends State<HomePage> {
 
     try {
       var response = await http.post(
-        Uri.parse('/claimInsurance'),
+        Uri.parse('http://51.120.6.142:80/claimInsurance'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(requestBody),
       );
@@ -96,11 +102,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-
         );
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,9 +201,11 @@ class _HomePageState extends State<HomePage> {
           children: [
             SizedBox(height: 630,),
             FloatingActionButton(
-              onPressed: (){_pickImage(true);},
-              child: Icon(Icons.add_a_photo),
+              onPressed: (){
+                _pickImage(true);
+                },
               backgroundColor: Colors.green,
+              child: const Icon(Icons.add_a_photo),
             ),
           ],
         ),
