@@ -1,3 +1,4 @@
+import 'package:cropconnect/pages/register.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 class MyLogin extends StatefulWidget {
@@ -48,136 +49,125 @@ class _MyLoginState extends State<MyLogin> {
         },
       );
     }
-    return Container(
-      decoration: const BoxDecoration(
-        color: Color(0xFFF2EFEB),
-        // image: DecorationImage(
-        //     image: AssetImage('assets/blue2.png'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Image.asset(
-                  'assets/3bgrem.png', // Replace with the actual path
-                  width: 500,
-                  height: 500,
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Color(0xFFF2EFEB),
+        body: SingleChildScrollView(
+          child: Column(
+            children:[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Image.asset(
+                  'assets/krishi.jpeg', // Replace with the actual path
+                  width: 300,
+                  height: 300,
                 ),
-              ],
-            ),
+                ],
+              ),
 
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.5),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 35, right: 35),
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: _phoneController,
-                            keyboardType: TextInputType.number,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Phone Number",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          TextField(
-                            controller: _passwordController,
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Password",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, 'login');
-                                },
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                                child: const Text(
-                                  'Sign In',
-                                  style: TextStyle(
-                                      color: Color(0xFF88C431),
-                                      fontSize: 27,
-                                      fontWeight: FontWeight.w700),
+              SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.01),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 35, right: 35),
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: _phoneController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "r3".tr,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextField(
+                              controller: _passwordController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "r5".tr,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, 'login');
+                                  },
+                                  child: Text(
+                                    'r7'.tr,
+                                    style: TextStyle(
+                                        color: Color(0xFF88C431),
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  style: TextButton.styleFrom(backgroundColor: Colors.white),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, 'register');
-                                },
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                                child: const Text(
-                                  'Sign Up',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Color(0xFF88C431),
-                                      fontSize: 18),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyRegister(),));
+                                  },
+                                  child: Text(
+                                    'r6'.tr,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Color(0xFF88C431),
+                                        fontSize: 18),
+                                  ),
+                                  style: TextButton.styleFrom(backgroundColor: Colors.white),
                                 ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  // Navigator.pushNamed(context, 'login');
-                                },
-                                child: Text(
-                                  'Language',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      color: Color(0xFF88C431),
-                                      fontSize: 18),
+                                TextButton(
+                                  onPressed: () {
+                                    _showPullUpDrawer(context);
+                                  },
+                                  child: Text(
+                                    'lang'.tr,
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                        color: Color(0xFF88C431),
+                                        fontSize: 18),
+                                  ),
+                                  style: TextButton.styleFrom(backgroundColor: Colors.white),
                                 ),
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        bottomNavigationBar:
-        TextButton(
-          style:TextButton.styleFrom(foregroundColor: Colors.green),
-          onPressed: () {
-            _showPullUpDrawer(context);
-          },
-          child: Text('lang'.tr,style: TextStyle(fontSize: 16),),
+            ],
+          ),
         ),
       ),
     );

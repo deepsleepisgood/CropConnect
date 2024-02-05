@@ -99,165 +99,163 @@ class _MyRegisterState extends State<MyRegister> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0xFFF2EFEB),
-        // image: DecorationImage(
-        //     image: AssetImage('assets/3.png'), fit: BoxFit.cover),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        // appBar: AppBar(
-        //   backgroundColor: const Color.fromARGB(0, 59, 59, 59),
-        //   elevation: 0,
-        // ),
-        body: Column(
-          children: [
-            SizedBox(height: 40,),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [Text(
-                  "Create an account",
-                  style: TextStyle(color: Color(0xFF88C431), fontSize: 28),
-                ),
-                  Image.asset(
-                    'assets/krishi.jpeg', // Replace with the actual path
-                    width: 150,
-                    height: 150,
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Color(0xFFF2EFEB),
+        body: SingleChildScrollView(
+          // backgroundColor: Colors.transparent,
+          // appBar: AppBar(
+          //   backgroundColor: const Color.fromARGB(0, 59, 59, 59),
+          //   elevation: 0,
+          // ),
+          child: Column(
+            children: [
+              SizedBox(height: 50,),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [Text(
+                    "r1".tr,
+                    style: TextStyle(color: Color(0xFF88C431), fontSize: 25),
                   ),
-                ]
-            ),
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.001),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 35, right: 35),
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: _nameController,
-                            style: TextStyle(color: Color(0xFFD49A42)),
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Name",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          TextFormField(
-                            controller: _phoneController,
-                            keyboardType: TextInputType.number,
-                            style: TextStyle(color: Color(0xFFD49A42)),
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Phone Number",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          TextFormField(
-                            controller: _panController,
-                            style: TextStyle(color: Color(0xFFD49A42)),
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "PAN Number",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          TextFormField(
-                            controller: _passwordController,
-                            obscureText: true,
-                            style: TextStyle(color: Color(0xFFD49A42)),
-                            decoration: InputDecoration(
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                                hintText: "Password",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                          ),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, 'register');
-                                },
-                                child: Text(
-                                  'Sign Up',
-                                  style: TextStyle(
-                                      color: Color(0xFF88C431),
-                                      fontSize: 27,
-                                      fontWeight: FontWeight.w700),
+                    Image.asset(
+                      'assets/krishi.jpeg', // Replace with the actual path
+                      width: 150,
+                      height: 150,
+                    ),
+                  ]
+              ),
+              SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.01),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 35, right: 35),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: _nameController,
+                              style: TextStyle(color: Color(0xFFD49A42)),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "r2".tr,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _phoneController,
+                              keyboardType: TextInputType.number,
+                              style: TextStyle(color: Color(0xFFD49A42)),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "r3".tr,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _panController,
+                              style: TextStyle(color: Color(0xFFD49A42)),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "r4".tr,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _passwordController,
+                              obscureText: true,
+                              style: TextStyle(color: Color(0xFFD49A42)),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "r5".tr,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    register();
+                                  },
+                                  child: Text(
+                                    'r6'.tr,
+                                    style: TextStyle(
+                                        color: Color(0xFF88C431),
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  style: TextButton.styleFrom(backgroundColor: Colors.white),
                                 ),
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                              ),
 
-                            ],
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.push(context,MaterialPageRoute(builder: (context) => MyLogin(),) );
-                                },
-                                child: Text(
-                                  'Sign In',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      color: Color(0xFF88C431),
-                                      fontSize: 18),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 60,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>MyLogin(),));
+                                  },
+                                  child: Text(
+                                    'r7'.tr,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Color(0xFF88C431),
+                                        fontSize: 18),
+                                  ),
+                                  style: TextButton.styleFrom(backgroundColor: Colors.white),
                                 ),
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  //Navigator.pushNamed(context, 'login');
-                                },
+                                TextButton(
+                                  onPressed: () {
+                                    _showPullUpDrawer(context);
+                                  },
 
-                                child: Text(
-                                  'Language',
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                      color: Color(0xFF88C431),
-                                      fontSize: 18),
+                                  child: Text(
+                                    'lang'.tr,
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                        color: Color(0xFF88C431),
+                                        fontSize: 18),
+                                  ),
+                                  style: TextButton.styleFrom(backgroundColor: Colors.white),
                                 ),
-                                style: TextButton.styleFrom(backgroundColor: Colors.white),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
