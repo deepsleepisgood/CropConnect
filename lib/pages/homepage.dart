@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
-import 'package:cropconnect/pages/localestring.dart';
+import 'package:cropconnect/pages/navigation.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final String userId;
+
+  const HomePage({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 final dateTime = DateTime.now();
+
 
 class _HomePageState extends State<HomePage> {
   XFile? _image;
@@ -65,10 +68,13 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(
+        currentPage: "HomePage",
+        userId: widget.userId,
+      ),
       body: Container(
         decoration:const  BoxDecoration(
           image: DecorationImage(

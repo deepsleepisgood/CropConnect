@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Information extends StatefulWidget {
-  const Information({super.key});
+  final String userId;
+
+  const Information({super.key, required  this.userId});
 
   @override
   State<Information> createState() => _InformationState();
@@ -13,6 +15,7 @@ class _InformationState extends State<Information> {
     return Scaffold(
       appBar: AppBar(
         title: Text('How to Use'),
+        centerTitle: true,
         backgroundColor: Colors.green,
       ),
 

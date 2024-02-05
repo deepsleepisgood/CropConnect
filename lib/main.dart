@@ -15,9 +15,10 @@ class CropConnect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       translations: LocalString(),
       locale: Locale('en','US'),
-      home: HomePage(),
+      home: HomePage(userId: 'userId',),
     );
   }
 }
