@@ -22,6 +22,14 @@ class LocalString extends Translations{
         'r5':'Password',
         'r6':'Sign Up',
         'r7':'Sign In',
+        'd1':'Home',
+        'd2':'Information',
+        'd3':'Progress',
+        'd4':'Support',
+        'd5':'Logout',
+        'p1':'Register a Complaint',
+        'p2':'Ongoing Complaint',
+        'p3':'Insurance Agent',
 
     },
     'hi_IN':{
@@ -42,6 +50,14 @@ class LocalString extends Translations{
       'r5':'पासवर्ड',
       'r6':'साइन अप करें',
       'r7':'साइन इन करें',
+      'd1':'घर',
+      'd2':'जानकारी',
+      'd3':'प्रगति',
+      'd4':'सहायता',
+      'd5':'लॉग आउट',
+      'p1':'शिकायत दर्ज करें',
+      'p2':'चल रही शिकायत',
+      'p3':'बीमा एजेंट',
     },
   };
 }

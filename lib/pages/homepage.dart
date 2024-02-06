@@ -7,19 +7,51 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:location/location.dart';
 
 class HomePage extends StatefulWidget {
   final String userId;
   String page;
-  HomePage({Key? key, required this.userId, required this.page}) : super(key: key);
+  HomePage({Key? key, required this.userId, required this.page})
+      : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
-final dateTime = DateTime.now();
 class _HomePageState extends State<HomePage> {
+  final dateTime = DateTime.now();
   XFile? _image;
+  List<dynamic> items = [];
+  Location location = Location();
+  double? latitude = 0;
+  double? longitude = 0;
+
+  Future _findlocation() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _locationData = await location.getLocation();
+    setState(() {
+      latitude = _locationData.latitude;
+      longitude = _locationData.longitude;
+      print("${latitude}, ${longitude}");
+    });
+  }
 
 //Function to access Camera
   Future _pickImage(bool isCamera) async {
@@ -30,19 +62,21 @@ class _HomePageState extends State<HomePage> {
       image = await ImagePicker().pickImage(source: ImageSource.gallery);
     }
     if (image != null) {
+      await _findlocation();
       setState(() {
         _image = image;
       });
       try {
-        _uploadImage(_image!);
-      }
-      catch (error) {
+        _uploadImage(_image!, latitude, longitude);
+      } catch (error) {
         print("ERROR : ${error}");
       }
     }
   }
+
   // FUNCTION TO UPLOAD IMAGE ON THE BACKEND
-  Future<void> _uploadImage(XFile imagePath) async {
+  Future<void> _uploadImage(
+      XFile imagePath, double? latitude, double? longitude) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     Map<String, dynamic>? decodedToken = JwtDecoder.decode(token!);
@@ -50,13 +84,17 @@ class _HomePageState extends State<HomePage> {
 
     // Prepare the request body as JSON
     var requestBody = {
-      'userId': userId,
+      'userId': widget.userId,
       'file': {
-        'originalname': _image?.name ?? '', // Assuming _image is an XFile
-        'data': base64Encode(await _image!.readAsBytes()), // Convert image to base64
+        'originalname': imagePath.name ?? '', // Assuming _image is an XFile
+        'data': base64Encode(
+            await imagePath.readAsBytes()), // Convert image to base64
+      },
+      'Geotag': {
+        'latitude': latitude,
+        'longitude': longitude,
       },
     };
-
     try {
       var response = await http.post(
         Uri.parse('http://51.120.6.142:80/claimInsurance'),
@@ -65,14 +103,16 @@ class _HomePageState extends State<HomePage> {
       );
 
       if (response.statusCode == 200) {
-        print('Image uploaded');
+        print('Image and Geotagging uploaded');
       } else {
-        print('Image upload failed with status: ${response.statusCode}');
+        print(
+            'Image and Geotagging upload failed with status: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error during image upload: $e');
+      print('Error during image and Geotagging upload: $e');
     }
   }
+
   void _showPullUpDrawer(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -81,30 +121,63 @@ class _HomePageState extends State<HomePage> {
           height: 100,
           padding: const EdgeInsets.all(10.0),
           decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(topRight: Radius.circular(10.0),topLeft: Radius.circular(10.0)),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10.0),
+                topLeft: Radius.circular(10.0)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextButton(onPressed: (){
-                var locale = Locale('en','US');
-                Get.updateLocale(locale);
-              },
+              TextButton(
+                onPressed: () {
+                  var locale = Locale('en', 'US');
+                  Get.updateLocale(locale);
+                },
                 style: TextButton.styleFrom(foregroundColor: Colors.green),
-                child: const Text('English',style: TextStyle(fontSize: 16),),
+                child: const Text(
+                  'English',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
-              TextButton(onPressed: (){
-                var locale = Locale('hi','IN');
-                Get.updateLocale(locale);
-              },
+              TextButton(
+                onPressed: () {
+                  var locale = Locale('hi', 'IN');
+                  Get.updateLocale(locale);
+                },
                 style: TextButton.styleFrom(foregroundColor: Colors.green),
-                child: const Text('हिंदी', style: TextStyle(fontSize: 16),),
+                child: const Text(
+                  'हिंदी',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ],
           ),
         );
       },
     );
+  }
+
+  Future<void> fetchLogs() async {
+    const String uri = "http://51.120.6.142:80/logs";
+    final response = await http.post(Uri.parse(uri),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "userId": widget.userId,
+        }));
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      setState(() {
+        items = List<dynamic>.from(data);
+      });
+    } else {
+      print("Error in fetching user logs");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLogs();
   }
 
   @override
@@ -120,14 +193,16 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            opacity: 150,
+            opacity: 190,
             image: AssetImage('assets/krishi.jpeg'),
             fit: BoxFit.cover,
           ),
         ),
         child: Column(
           children: [
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               padding: const EdgeInsets.only(
                   top: 10.0, bottom: 0.0, left: 10.0, right: 10.0),
@@ -158,52 +233,77 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(width: 90),
                       // Add Image Button
-                      IconButton(
-                        icon: const Icon(Icons.account_circle,size: 45),
-                        onPressed: () {
-                        },
-                      ),
+              TextButton(onPressed: (){}, child: Image.asset('assets/farmerrembg.png',height: 50,width: 50,)),
                     ],
                   ),
-                  const SizedBox(
-                    height: 150,
-                  ),
-           //container(
-           //padding: const EdgeInsets.all(15.0),
-           //decoration: const BoxDecoration(
-           //  shape: BoxShape.circle,
-           //  color: Colors.green, // Customize the color as needed
-           //),
-           //child: IconButton(onPressed: (){
-           //  _pickImage(true);
-           //},
-           //    alignment: Alignment.center,
-           //    icon: const Icon(Icons.add_a_photo,size: 30, color: Colors.white,)),
-           //
                 ],
               ),
             ),
-            const SizedBox(height: 380,),
+            Container(
+              padding: const EdgeInsets.all(10),
+              //decoration: BoxDecoration(),
+              child: items.isEmpty ? const Center(
+                child: Text(
+                  'No logs available',
+                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+                ),) : ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 6,
+                          )
+                        ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          items[index]['Time Of Upload'],
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 520,
+            ),
             TextButton(
-              style:TextButton.styleFrom(foregroundColor: Colors.green),
+              style: TextButton.styleFrom(foregroundColor: Colors.green),
               onPressed: () {
                 _showPullUpDrawer(context);
               },
-              child: Text('lang'.tr, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.green),),
+              child: Text(
+                'lang'.tr,
+                style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
+              ),
             ),
           ],
         ),
       ),
       floatingActionButton: Container(
-        padding: EdgeInsets.only(left: 30.0),
+        padding: const EdgeInsets.only(left: 30.0),
         alignment: Alignment.center,
         child: Column(
           children: [
-            SizedBox(height: 630,),
+            const SizedBox(
+              height: 670,
+            ),
             FloatingActionButton(
-              onPressed: (){
+              onPressed: () {
                 _pickImage(true);
-                },
+              },
               backgroundColor: Colors.green,
               child: const Icon(Icons.add_a_photo),
             ),

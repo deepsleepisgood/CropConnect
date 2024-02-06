@@ -34,7 +34,7 @@ class CropConnect extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translations: LocalString(),
       locale: Locale('en', 'US'),
-      home: HomePage(userId: "userId", page: "home",),
+      home: HomePage(userId: 'userId',page: 'home',),
       //home: isAuthenticated ? HomePage(userId: userId, page: "home") : const MyRegister(),
     );
   }

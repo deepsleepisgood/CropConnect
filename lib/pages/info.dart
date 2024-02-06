@@ -52,6 +52,7 @@ class _InformationState extends State<Information> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF2EFEB),
       drawer: const NavBar(
         userId: "userId",
         currentPage: "info",
