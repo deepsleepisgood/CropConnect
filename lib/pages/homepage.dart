@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,7 +8,6 @@ import 'package:cropconnect/pages/navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:location/location.dart';
 
 class HomePage extends StatefulWidget {
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> {
         _image = image;
       });
       try {
+        print("uploading");
         _uploadImage(_image!, latitude, longitude);
       } catch (error) {
         print("ERROR : ${error}");
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
 
     // Prepare the request body as JSON
     var requestBody = {
-      'userId': widget.userId,
+      'userId': "Arnav7896540132",
       'file': {
         'originalname': imagePath.name ?? '', // Assuming _image is an XFile
         'data': base64Encode(
@@ -162,12 +164,14 @@ class _HomePageState extends State<HomePage> {
     final response = await http.post(Uri.parse(uri),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          "userId": widget.userId,
+          "userId": "Arnav7896540132",
         }));
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
       setState(() {
         items = List<dynamic>.from(data);
+        print("Images Fetched successfully");
+        print(items);
       });
     } else {
       print("Error in fetching user logs");
@@ -233,48 +237,65 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(width: 90),
                       // Add Image Button
-              TextButton(onPressed: (){}, child: Image.asset('assets/farmerrembg.png',height: 50,width: 50,)),
+                      TextButton(onPressed: (){}, child: Image.asset('assets/farmerrembg.png',height: 50,width: 50,)),
                     ],
                   ),
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              //decoration: BoxDecoration(),
-              child: items.isEmpty ? const Center(
-                child: Text(
-                  'No logs available',
-                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
-                ),) : ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 6,
-                          )
-                        ]),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          items[index]['Time Of Upload'],
-                          style: const TextStyle(
-                              fontSize: 18, color: Colors.black),
-                        ),
-                      ],
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: 450,
+                      padding: const EdgeInsets.all(10),
+                      //decoration: BoxDecoration(),
+                      child: items.isEmpty ? const Center(
+                        child: Text(
+                          'No logs available',
+                          style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+                        ),) : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 3,
+                                    blurRadius: 6,
+                                  )
+                                ]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  items[index]['DateTime'],
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.black),
+                                ),
+                                Text(
+                                  items[index]['OriginalFilename'],
+                                  style: const TextStyle(
+                                      fontSize: 14, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
             ),
             const SizedBox(
-              height: 520,
+              height: 180,
             ),
             TextButton(
               style: TextButton.styleFrom(foregroundColor: Colors.green),
